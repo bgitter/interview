@@ -1,6 +1,6 @@
-package com.zxb.code.sort.shell;
+package com.zhang.interview.code.sort.shell;
 
-import com.zxb.code.sort.BaseSort;
+import com.zhang.interview.code.sort.BaseSort;
 
 /**
  * @ClassName: ShellSort <br>

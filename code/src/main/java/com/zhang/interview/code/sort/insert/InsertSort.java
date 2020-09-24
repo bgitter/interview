@@ -1,6 +1,6 @@
-package com.zxb.code.sort.insert;
+package com.zhang.interview.code.sort.insert;
 
-import com.zxb.code.sort.BaseSort;
+import com.zhang.interview.code.sort.BaseSort;
 
 /**
  * @ClassName: InsertSort <br>

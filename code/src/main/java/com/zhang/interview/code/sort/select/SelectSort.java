@@ -1,6 +1,6 @@
-package com.zxb.code.sort.select;
+package com.zhang.interview.code.sort.select;
 
-import com.zxb.code.sort.BaseSort;
+import com.zhang.interview.code.sort.BaseSort;
 
 /**
  * @ClassName: SelectSort <br>

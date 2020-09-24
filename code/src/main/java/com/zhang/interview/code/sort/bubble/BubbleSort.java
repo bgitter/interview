@@ -1,6 +1,6 @@
-package com.zxb.code.sort.bubble;
+package com.zhang.interview.code.sort.bubble;
 
-import com.zxb.code.sort.BaseSort;
+import com.zhang.interview.code.sort.BaseSort;
 
 /**
  * @ClassName: BubbleSort <br>

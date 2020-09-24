@@ -1,6 +1,6 @@
-package com.zxb.code.sort.quick;
+package com.zhang.interview.code.sort.quick;
 
-import com.zxb.code.sort.BaseSort;
+import com.zhang.interview.code.sort.BaseSort;
 
 /**
  * @ClassName: QuickSort <br>

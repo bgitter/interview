@@ -1,4 +1,4 @@
-package com.zxb.code.sort;
+package com.zhang.interview.code.sort;
 
 import org.apache.commons.lang3.time.StopWatch;
 
@@ -23,9 +23,18 @@ public abstract class BaseSort {
      * 打印数组
      */
     public void printNums() {
-        int[] nums = new int[length];
+        printNums(length);
+    }
+
+    /**
+     * 打印数组
+     *
+     * @param arrayLength 指定数组长度
+     */
+    public void printNums(int arrayLength) {
+        int[] nums = new int[arrayLength];
         Random random = new Random();
-        for (int i = 0; i < length; i++) {
+        for (int i = 0; i < arrayLength; i++) {
             int num = random.nextInt(1000) + 1;
             nums[i] = num;
         }
