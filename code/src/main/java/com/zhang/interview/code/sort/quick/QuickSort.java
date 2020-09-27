@@ -47,11 +47,11 @@ public class QuickSort extends BaseSort {
     int key = arr[left];
     while (i < j) {
       // 从左往右找第一个大于基准数的元素
-      if (i < j && arr[i] <= key) {
+      while (i < j && arr[i] <= key) {
         i++;
       }
       // 从右往左找第一个小于基准数的元素
-      if (i < j && arr[j] >= key) {
+      while (i < j && arr[j] > key) {
         j--;
       }
       if (i < j) {
