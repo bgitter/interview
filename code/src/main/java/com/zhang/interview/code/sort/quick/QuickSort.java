@@ -23,45 +23,46 @@ import com.zhang.interview.code.sort.BaseSort;
  */
 public class QuickSort extends BaseSort {
 
-    public static void main(String[] args) {
-        QuickSort sort = new QuickSort();
-        sort.printNums();
-    }
+  public static void main(String[] args) {
+    QuickSort sort = new QuickSort();
+    sort.printNums();
+  }
 
-    protected void sort(int[] arr) {
-        if (arr == null || arr.length < 2) {
-            System.err.println("数组长度不可小于2");
-            return;
-        }
-        quickSort(arr, 0, arr.length - 1);
+  @Override
+  protected void sort(int[] arr) {
+    if (arr == null || arr.length < 2) {
+      System.err.println("数组长度不可小于2");
+      return;
     }
+    quickSort(arr, 0, arr.length - 1);
+  }
 
-    private void quickSort(int[] arr, int left, int right) {
-        if (left > right) {
-            return;
-        }
-        int i = left;
-        int j = right;
-        // 选择基准数
-        int key = arr[left];
-        while (i < j) {
-            // 从左往右找第一个大于基准数的元素
-            if (i < j && arr[i] <= key) {
-                i++;
-            }
-            // 从右往左找第一个小于基准数的元素
-            if (i < j && arr[j] >= key) {
-                j--;
-            }
-            if (i < j) {
-                int temp = arr[i];
-                arr[i] = arr[j];
-                arr[j] = temp;
-            }
-        }
-        arr[left] = arr[i];
-        arr[i] = key;
-        quickSort(arr, left, i - 1);
-        quickSort(arr, i + 1, right);
+  private void quickSort(int[] arr, int left, int right) {
+    if (left > right) {
+      return;
     }
+    int i = left;
+    int j = right;
+    // 选择基准数
+    int key = arr[left];
+    while (i < j) {
+      // 从左往右找第一个大于基准数的元素
+      if (i < j && arr[i] <= key) {
+        i++;
+      }
+      // 从右往左找第一个小于基准数的元素
+      if (i < j && arr[j] >= key) {
+        j--;
+      }
+      if (i < j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+      }
+    }
+    arr[left] = arr[i];
+    arr[i] = key;
+    quickSort(arr, left, i - 1);
+    quickSort(arr, i + 1, right);
+  }
 }

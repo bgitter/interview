@@ -20,75 +20,76 @@ import com.zhang.interview.code.sort.BaseSort;
  */
 public class MergeSort extends BaseSort {
 
-    public static void main(String[] args) {
-        MergeSort sort = new MergeSort();
-        sort.printNums();
+  public static void main(String[] args) {
+    MergeSort sort = new MergeSort();
+    sort.printNums();
+  }
+
+  @Override
+  protected void sort(int[] arr) {
+    if (arr == null || arr.length < 2) {
+      System.err.println("数组长度不可小于2");
+      return;
     }
+    mergeSort(0, arr.length - 1, arr, new int[arr.length]);
+  }
 
-    protected void sort(int[] arr) {
-        if (arr == null || arr.length < 2) {
-            System.err.println("数组长度不可小于2");
-            return;
-        }
-        mergeSort(0, arr.length - 1, arr, new int[arr.length]);
+  /**
+   * 从数组内分解子序列并执行排序
+   *
+   * @param start 开始下标
+   * @param end   结束下标
+   * @param nums  原数组
+   * @param temp  临时数组
+   */
+  private void mergeSort(int start, int end, int[] nums, int[] temp) {
+    // 起始位置与终止位置一致，终止递归拆解
+    if (start >= end) {
+      return;
     }
+    // 计算中间位置
+    int mid = start + (end - start) / 2;
 
-    /**
-     * 从数组内分解子序列并执行排序
-     *
-     * @param start 开始下标
-     * @param end   结束下标
-     * @param nums  原数组
-     * @param temp  临时数组
-     */
-    private void mergeSort(int start, int end, int[] nums, int[] temp) {
-        // 起始位置与终止位置一致，终止递归拆解
-        if (start >= end) {
-            return;
-        }
-        // 计算中间位置
-        int mid = start + (end - start) / 2;
+    // 递归拆解左侧数组
+    mergeSort(start, mid, nums, temp);
+    // 递归拆机右侧数组
+    mergeSort(mid + 1, end, nums, temp);
 
-        // 递归拆解左侧数组
-        mergeSort(start, mid, nums, temp);
-        // 递归拆机右侧数组
-        mergeSort(mid + 1, end, nums, temp);
+    // 子序列排序，合并
+    merge(start, end, mid, nums, temp);
+  }
 
-        // 子序列排序，合并
-        merge(start, end, mid, nums, temp);
+  /**
+   * 子序列排序、合并；临时数组复制回原数组
+   *
+   * @param start 开始位置
+   * @param end   结束位置
+   * @param mid   中间位置
+   * @param nums  数组
+   * @param temp  临时数组
+   */
+  private void merge(int start, int end, int mid, int[] nums, int[] temp) {
+    int idx = 0;
+    int i = start;
+    int j = mid + 1;
+    while (i <= mid && j <= end) {
+      if (nums[i] > nums[j]) {
+        temp[idx++] = nums[j++];
+      } else {
+        temp[idx++] = nums[i++];
+      }
     }
-
-    /**
-     * 子序列排序、合并；临时数组复制回原数组
-     *
-     * @param start 开始位置
-     * @param end   结束位置
-     * @param mid   中间位置
-     * @param nums  数组
-     * @param temp  临时数组
-     */
-    private void merge(int start, int end, int mid, int[] nums, int[] temp) {
-        int idx = 0;
-        int i = start;
-        int j = mid + 1;
-        while (i <= mid && j <= end) {
-            if (nums[i] > nums[j]) {
-                temp[idx++] = nums[j++];
-            } else {
-                temp[idx++] = nums[i++];
-            }
-        }
-        // 遍历剩余i节点到中间节点的元素
-        while (i <= mid) {
-            temp[idx++] = nums[i++];
-        }
-        // 遍历剩余j节点到结束节点的元素
-        while (j <= end) {
-            temp[idx++] = nums[j++];
-        }
-        // 把临时数组中已排序的数复制到nums数组中
-        if (idx > 0) {
-            System.arraycopy(temp, 0, nums, start, idx);
-        }
+    // 遍历剩余i节点到中间节点的元素
+    while (i <= mid) {
+      temp[idx++] = nums[i++];
     }
+    // 遍历剩余j节点到结束节点的元素
+    while (j <= end) {
+      temp[idx++] = nums[j++];
+    }
+    // 把临时数组中已排序的数复制到nums数组中
+    if (idx > 0) {
+      System.arraycopy(temp, 0, nums, start, idx);
+    }
+  }
 }

@@ -21,31 +21,32 @@ import com.zhang.interview.code.sort.BaseSort;
  */
 public class InsertSort extends BaseSort {
 
-    public static void main(String[] args) {
-        InsertSort sort = new InsertSort();
-        sort.printNums();
-    }
+  public static void main(String[] args) {
+    InsertSort sort = new InsertSort();
+    sort.printNums();
+  }
 
-    protected void sort(int[] arr) {
-        if (arr == null || arr.length < 2) {
-            System.err.println("数组长度不可小于2");
-            return;
-        }
-        int length = arr.length;
-        for (int i = 0; i < length - 1; i++) {
-            // 当前元素
-            int c = arr[i + 1];
-            // 前一个对象下标
-            int preIdx = i;
-            // 在数组中找到一个比当前遍历的数小的元素
-            while (preIdx >= 0 && c < arr[preIdx]) {
-                // 把比当前遍历的数大的元素往后移动一位
-                arr[preIdx + 1] = arr[preIdx];
-                // 需要插入的数的下标往前移动
-                preIdx -= 1;
-            }
-
-            arr[preIdx + 1] = c;
-        }
+  @Override
+  protected void sort(int[] arr) {
+    if (arr == null || arr.length < 2) {
+      System.err.println("数组长度不可小于2");
+      return;
     }
+    int length = arr.length;
+    for (int i = 0; i < length - 1; i++) {
+      // 当前元素
+      int c = arr[i + 1];
+      // 前一个对象下标
+      int preIdx = i;
+      // 在数组中找到一个比当前遍历的数小的元素
+      while (preIdx >= 0 && c < arr[preIdx]) {
+        // 把比当前遍历的数大的元素往后移动一位
+        arr[preIdx + 1] = arr[preIdx];
+        // 需要插入的数的下标往前移动
+        preIdx -= 1;
+      }
+
+      arr[preIdx + 1] = c;
+    }
+  }
 }

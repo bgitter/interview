@@ -18,30 +18,31 @@ import com.zhang.interview.code.sort.BaseSort;
  */
 public class SelectSort extends BaseSort {
 
-    public static void main(String[] args) {
-        SelectSort sort = new SelectSort();
-        sort.printNums();
-    }
+  public static void main(String[] args) {
+    SelectSort sort = new SelectSort();
+    sort.printNums();
+  }
 
-    protected void sort(int[] arr) {
-        if (arr == null || arr.length < 2) {
-            System.err.println("数组长度不可小于2");
-            return;
-        }
-        int length = arr.length;
-        for (int i = 0; i < length; i++) {
-            int minIdx = i;
-            // 找到最小元素
-            for (int j = i + 1; j < length; j++) {
-                if (arr[minIdx] > arr[j]) {
-                    minIdx = j;
-                }
-            }
-            if (i != minIdx) {
-                int temp = arr[i];
-                arr[i] = arr[minIdx];
-                arr[minIdx] = temp;
-            }
-        }
+  @Override
+  protected void sort(int[] arr) {
+    if (arr == null || arr.length < 2) {
+      System.err.println("数组长度不可小于2");
+      return;
     }
+    int length = arr.length;
+    for (int i = 0; i < length; i++) {
+      int minIdx = i;
+      // 找到最小元素
+      for (int j = i + 1; j < length; j++) {
+        if (arr[minIdx] > arr[j]) {
+          minIdx = j;
+        }
+      }
+      if (i != minIdx) {
+        int temp = arr[i];
+        arr[i] = arr[minIdx];
+        arr[minIdx] = temp;
+      }
+    }
+  }
 }

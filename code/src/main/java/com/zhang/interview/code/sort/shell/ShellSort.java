@@ -19,31 +19,32 @@ import com.zhang.interview.code.sort.BaseSort;
  */
 public class ShellSort extends BaseSort {
 
-    public static void main(String[] args) {
-        ShellSort sort = new ShellSort();
-        sort.printNums();
-    }
+  public static void main(String[] args) {
+    ShellSort sort = new ShellSort();
+    sort.printNums();
+  }
 
-    protected void sort(int[] arr) {
-        if (arr == null || arr.length < 2) {
-            System.err.println("数组长度不可小于2");
-            return;
-        }
-        int length = arr.length;
-        int temp;
-        // 步长
-        int gap = length / 2;
-        while (gap > 0) {
-            for (int i = gap; i < length; i++) {
-                temp = arr[i];
-                int preIdx = i - gap;
-                while (preIdx >= 0 && arr[preIdx] > temp) {
-                    arr[preIdx + gap] = arr[preIdx];
-                    preIdx -= gap;
-                }
-                arr[preIdx + gap] = temp;
-            }
-            gap /= 2;
-        }
+  @Override
+  protected void sort(int[] arr) {
+    if (arr == null || arr.length < 2) {
+      System.err.println("数组长度不可小于2");
+      return;
     }
+    int length = arr.length;
+    int temp;
+    // 步长
+    int gap = length / 2;
+    while (gap > 0) {
+      for (int i = gap; i < length; i++) {
+        temp = arr[i];
+        int preIdx = i - gap;
+        while (preIdx >= 0 && arr[preIdx] > temp) {
+          arr[preIdx + gap] = arr[preIdx];
+          preIdx -= gap;
+        }
+        arr[preIdx + gap] = temp;
+      }
+      gap /= 2;
+    }
+  }
 }
