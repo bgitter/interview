@@ -23,9 +23,9 @@ package com.zhang.interview.code.leetcode;
 public class UniquePaths {
 
   public static void main(String[] args) {
-    int m = 100, n = 100;
-//    int paths = DFS(1, 1, m, n);
-    long paths = DP(m, n);
+    int m = 3, n = 7;
+    long paths = DFS(1, 1, m, n);
+//    long paths = DP(m, n);
     System.out.println("可走路径：" + paths);
   }
 
