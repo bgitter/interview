@@ -1,8 +1,10 @@
 package com.zhang.interview.code.common;
 
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.TimeUnit;
+import org.apache.commons.lang3.time.StopWatch;
 
 /**
  * @Copyright (C), 2018-2020, 北京数知科技股份有限公司
@@ -18,33 +20,36 @@ public class ThreadPrintDemo {
 
   private String input;
   private int threadSize;
-  private AtomicInteger loop;
-  private volatile boolean startup = true;
-  private volatile int arrived = 0;
-  private AtomicInteger idx = new AtomicInteger(0);
+  private int printTimes;
+  private int index = 0;
+  private int read = 0;
+
+  private CountDownLatch done = new CountDownLatch(1);
 
   /**
    * 打印构造函数
    *
    * @param input      待打印字符串
-   * @param loop       打印次数
+   * @param printTimes 打印次数
    * @param threadSize 线程任务数
    */
-  public ThreadPrintDemo(String input, int loop, int threadSize) {
+  public ThreadPrintDemo(String input, int printTimes, int threadSize) {
     this.input = input;
-    this.loop = new AtomicInteger(loop);
+    this.printTimes = printTimes;
     this.threadSize = threadSize;
+    read = threadSize;
   }
 
   /**
    * 打印入口
    */
-  private void print() {
+  private void print() throws InterruptedException {
     if (input == null) {
       return;
     }
+    StopWatch watch = StopWatch.createStarted();
     // 线程交替执行
-    ExecutorService executorService = Executors.newCachedThreadPool();
+    ExecutorService executorService = Executors.newFixedThreadPool(threadSize);
     for (int i = 0; i < threadSize; i++) {
       executorService.execute(() -> {
         try {
@@ -54,6 +59,8 @@ public class ThreadPrintDemo {
         }
       });
     }
+    done.await();
+    System.out.println(String.format("耗时：%dms", watch.getTime(TimeUnit.MILLISECONDS)));
     executorService.shutdown();
   }
 
@@ -63,36 +70,37 @@ public class ThreadPrintDemo {
   private void run() throws Exception {
     int length = input.length();
     String threadName = Thread.currentThread().getName();
-    // 获取执行资源且当前状态可执行
-    while (startup) {
-      // 获取同步锁
+    while (true) {
+      /*System.out.println(threadName + ",进入同步块之前");*/
+
       synchronized (this) {
-        if (!startup) {
-          notifyAll();
+        // 任务已执行完毕，跳出循环
+        if (done.getCount() == 0) {
           break;
         }
 
-        if (idx.get() == length) {
-          // 输出位重置
-          idx.set(0);
-          // 一次完成字符串输出，任务执行次数减一
+        if (index == length) {
+          // 重置输出位，保证下次输出从字符串头部开始
+          index = 0;
           System.out.println(threadName + ":" + " ");
-          if (loop.decrementAndGet() == 0) {
-            // 输出换行
-            System.out.println("");
-            // 任务执行完毕
-            startup = false;
+
+          // 当打印次数不为负数时（为负值表示打印次数不限），完成一次完整的字符输出，打印次数减一
+          printTimes = printTimes > 0 ? printTimes - 1 : printTimes;
+          if (printTimes == 0) {
+            done.countDown();
             // 通知其他阻塞线程
+            System.out.println(threadName + ",通知其他线程执行完毕");
             notifyAll();
+            break;
           }
         } else {
-          System.out.println(threadName + ":" + input.charAt(idx.getAndIncrement()));
+          System.out.println(threadName + ":" + input.charAt(index++));
         }
-
-        arrived += 1;
-        if (arrived == threadSize) {
+        read -= 1;
+        if (read == 0) {
+          read = threadSize;
+          System.out.println("---------");
           notifyAll();
-          arrived = 0;
         } else {
           wait();
         }
@@ -101,7 +109,7 @@ public class ThreadPrintDemo {
     System.out.println(threadName + "执行完毕");
   }
 
-  public static void main(String[] args) {
-    new ThreadPrintDemo("ali", 10, 4).print();
+  public static void main(String[] args) throws Exception {
+    new ThreadPrintDemo("ali", 100000, 4).print();
   }
 }
