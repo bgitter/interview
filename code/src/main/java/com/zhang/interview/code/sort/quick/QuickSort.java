@@ -25,7 +25,7 @@ public class QuickSort extends BaseSort {
 
   public static void main(String[] args) {
     QuickSort sort = new QuickSort();
-    sort.printNums();
+    sort.printNums(100);
   }
 
   @Override
@@ -46,14 +46,16 @@ public class QuickSort extends BaseSort {
     // 选择基准数
     int key = arr[left];
     while (i < j) {
+      // 注意：先从右边把小于或等于key的元素找到并移动前面
+      // 从右往左找第一个小于或等于基准数的元素
+      while (i < j && arr[j] > key) {
+        j--;
+      }
       // 从左往右找第一个大于基准数的元素
       while (i < j && arr[i] <= key) {
         i++;
       }
-      // 从右往左找第一个小于基准数的元素
-      while (i < j && arr[j] > key) {
-        j--;
-      }
+
       if (i < j) {
         int temp = arr[i];
         arr[i] = arr[j];
