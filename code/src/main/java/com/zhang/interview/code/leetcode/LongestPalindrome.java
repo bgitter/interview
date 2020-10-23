@@ -18,6 +18,7 @@ package com.zhang.interview.code.leetcode;
  * 输出: "bb"
  * <p>
  * 资料：
+ * https://www.cxyxiaowu.com/2665.html
  * https://www.cxyxiaowu.com/2869.html
  * https://www.toutiao.com/i6542501325152715277
  * manacher算法可视化讲解：http://manacher-viz.s3-website-us-east-1.amazonaws.com/#/
