@@ -1,11 +1,15 @@
 package com.zhang.interview.code.common;
 
-import org.apache.commons.lang3.time.StopWatch;
-
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.PriorityQueue;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
+import org.apache.commons.lang3.time.StopWatch;
 
 /**
  * @ClassName: TopKDemo <br>
@@ -25,64 +29,64 @@ import java.util.concurrent.TimeUnit;
  */
 public class TopKDemo {
 
-    /**
-     * 存放海量的模拟数据
-     */
-    private static final File file = new File("topk_data.txt");
-    private static final Random random = new Random();
-    private static final int K = 10;
-    private static final PriorityQueue<Long> priorityQueue = new PriorityQueue<>(K);
-    private static final int NUM = 1000000;
+  /**
+   * 存放海量的模拟数据
+   */
+  private static final File file = new File("topk_data.txt");
+  private static final Random random = new Random();
+  private static final int K = 10;
+  private static final PriorityQueue<Long> priorityQueue = new PriorityQueue<>(K);
+  private static final int NUM = 1000000;
 
-    public static void init() {
-        StopWatch watch = StopWatch.createStarted();
-        try (FileWriter writer = new FileWriter(file, true)) {
-            // 模拟NUM个数，一般100W个即可
-            for (int i = 0; i < NUM; i++) {
-                writer.write(String.valueOf(random.nextLong()) + System.lineSeparator());
-            }
-            // 写入10个接近long的最大的数，便于验证正确结果
-            for (int i = 0; i < 10; i++) {
-                writer.write(String.valueOf(Long.MAX_VALUE - i) + System.lineSeparator());
-            }
-            writer.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        System.out.println("数据初始化耗时：" + watch.getTime(TimeUnit.MILLISECONDS) + "ms");
+  public static void init() {
+    StopWatch watch = StopWatch.createStarted();
+    try (FileWriter writer = new FileWriter(file, true)) {
+      // 模拟NUM个数，一般100W个即可
+      for (int i = 0; i < NUM; i++) {
+        writer.write(String.valueOf(random.nextLong()) + System.lineSeparator());
+      }
+      // 写入10个接近long的最大的数，便于验证正确结果
+      for (int i = 0; i < K; i++) {
+        writer.write(String.valueOf(Long.MAX_VALUE - i) + System.lineSeparator());
+      }
+      writer.flush();
+    } catch (IOException e) {
+      e.printStackTrace();
     }
+    System.out.println("数据初始化耗时：" + watch.getTime(TimeUnit.MILLISECONDS) + "ms");
+  }
 
-    public static void main(String[] args) {
-        if (!file.exists()) {
-            init();
-        }
-        StopWatch watch = StopWatch.createStarted();
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                long item = Long.parseLong(line);
-                if (priorityQueue.size() < K) {
-                    priorityQueue.add(item);
-                } else {
-                    long head = priorityQueue.peek();
-                    if (item > head) {
-                        // 将首个元素从队列内拉取
-                        priorityQueue.poll();
-                        // 将当前元素插入队列中
-                        priorityQueue.add(item);
-                    }
-                }
-            }
-            System.out.println("查找最大前N个数耗时： " + watch.getTime(TimeUnit.MILLISECONDS) + "ms");
-            Long item = null;
-            while ((item = priorityQueue.poll()) != null) {
-                System.out.println("item: " + item);
-            }
-            System.out.println("Long.MAX_VALUE: " + Long.MAX_VALUE);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+  public static void main(String[] args) {
+    if (!file.exists()) {
+      init();
     }
+    StopWatch watch = StopWatch.createStarted();
+    try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+      String line;
+      while ((line = reader.readLine()) != null) {
+        long item = Long.parseLong(line);
+        if (priorityQueue.size() < K) {
+          priorityQueue.add(item);
+        } else {
+          long head = priorityQueue.peek();
+          if (item > head) {
+            // 将首个元素从队列内拉取
+            priorityQueue.poll();
+            // 将当前元素插入队列中
+            priorityQueue.add(item);
+          }
+        }
+      }
+      System.out.println("查找最大前N个数耗时： " + watch.getTime(TimeUnit.MILLISECONDS) + "ms");
+      Long item = null;
+      while ((item = priorityQueue.poll()) != null) {
+        System.out.println("item: " + item);
+      }
+      System.out.println("Long.MAX_VALUE: " + Long.MAX_VALUE);
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
 }

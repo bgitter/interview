@@ -1,4 +1,4 @@
-package com.zhang.interview.code.leetcode.intermediate;
+package com.zhang.interview.code.leetcode;
 
 import com.alibaba.fastjson.JSONObject;
 import java.util.ArrayList;

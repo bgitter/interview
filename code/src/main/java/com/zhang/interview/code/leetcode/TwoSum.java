@@ -1,4 +1,4 @@
-package com.zhang.interview.code.leetcode.primary;
+package com.zhang.interview.code.leetcode;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -9,7 +9,7 @@ import java.util.Map;
  * @FileName: TwoSum
  * @Author: zxb
  * @Date: 2020/9/26 17:42
- * @Description: 两数之和
+ * @Description: Leetcode1 两数之和 简单
  * 描述：给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那两个整数，
  * 并返回他们的数组下标。
  * 注：你可以假设每种输入只会对应一个答案。但是，你不能重复利用这个数组中同样的元素。
