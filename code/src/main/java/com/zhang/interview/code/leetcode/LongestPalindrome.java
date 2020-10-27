@@ -22,11 +22,13 @@ package com.zhang.interview.code.leetcode;
  * https://www.cxyxiaowu.com/2869.html
  * https://www.toutiao.com/i6542501325152715277
  * manacher算法可视化讲解：http://manacher-viz.s3-website-us-east-1.amazonaws.com/#/
+ * 漫画说manacher算法：
+ * https://mp.weixin.qq.com/s?__biz=MzUyNjQxNjYyMg==&mid=2247485998&idx=1&sn=ecccf562324dac313a23964325145c78&chksm=fa0e65afcd79ecb9058babb2310f019e0ed5e5822503cce6a0d734d4fe2306b696d706f0bad8&scene=21#wechat_redirect
  */
 public class LongestPalindrome {
 
   public static void main(String[] args) {
-    String str = "aabbaa";
+    String str = "abba";
     // String result = solution1(str);
     // String result = solution2(str);
     String result = solution3(str);
@@ -171,8 +173,9 @@ public class LongestPalindrome {
     int maxRight = 0;
 
     for (int i = 1; i < len - 1; i++) {
-      int symPos = 2 * center - 1;
-      rad[i] = (maxRight > i) ? Math.min(maxRight - i, rad[symPos]) : 1;
+      // i节点的关于 center节点的对称节点（i的镜像）
+      int mirror = 2 * center - i;
+      rad[i] = (maxRight > i) ? Math.min(maxRight - i, rad[mirror]) : 1;
 
       // 以i为中心检索两边的字符串
       while (temp.charAt(i + rad[i]) == temp.charAt(i - rad[i])) {

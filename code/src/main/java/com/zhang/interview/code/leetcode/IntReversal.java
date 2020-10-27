@@ -24,7 +24,7 @@ public class IntReversal {
     while (num > 0) {
       // 拼接结果
       result = result * factor + num % factor;
-      num = num / factor | 0;
+      num /= factor;
     }
     // 反转结果如果超过Integer取值范围，则返回0
     if (result > Integer.MAX_VALUE || result < Integer.MIN_VALUE) {
