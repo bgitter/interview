@@ -47,8 +47,15 @@ public class ThreeSum {
 
   public static void main(String[] args) {
     StopWatch watch = StopWatch.createStarted();
-    List<List<Integer>> list = new ArrayList<>();
     int[] nums = {-1, 0, 1, -1, 2, -4};
+    List<List<Integer>> list = new ThreeSum().threeSum(nums);
+    System.out.println(JSONObject.toJSONString(list));
+    System.out.println(String.format("耗时：%dms", watch.getTime(TimeUnit.MILLISECONDS)));
+  }
+
+  public List<List<Integer>> threeSum(int[] nums) {
+    List<List<Integer>> list = new ArrayList<>();
+    // 排序
     Arrays.sort(nums);
     int n = nums.length;
     for (int i = 0; i < n; i++) {
@@ -86,7 +93,6 @@ public class ThreeSum {
         }
       }
     }
-    System.out.println(JSONObject.toJSONString(list));
-    System.out.println(String.format("耗时：%dms", watch.getTime(TimeUnit.MILLISECONDS)));
+    return list;
   }
 }
