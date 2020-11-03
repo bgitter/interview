@@ -37,8 +37,8 @@ package com.zhang.interview.code.leetcode;
 public class MedianOfTwoSortedArrays {
 
   public static void main(String[] args) {
-    int[] a = {2};
-    int[] b = {};
+    int[] a = {1, 2, 3, 4, 5};
+    int[] b = {7, 8, 9};
     double m = findMedianSortedArrays(a, b);
     System.out.println("中位数为：" + m);
   }
@@ -52,23 +52,15 @@ public class MedianOfTwoSortedArrays {
     }
     int iMin = 0, iMax = m;
     while (iMin <= iMax) {
-      // 数组A的cut点
       int i = (iMin + iMax) / 2;
-      // 数组B的cut点
       int j = (m + n + 1) / 2 - i;
-
-      // i需要增大，相应的j会减小，因此j不能==0
+      // i 需要增大
       if (j != 0 && i != m && b[j - 1] > a[i]) {
         iMin = i + 1;
-      }
-
-      // i需要减小，相应的j会增大，因此j不能==n
-      else if (i != 0 && j != n && a[i - 1] > b[j]) {
+      } else if (i != 0 && j != n && a[i - 1] > b[j]) {
+        // i 需要减小
         iMax = i - 1;
-      }
-
-      // 达到要求，并且将边界条件列出来单独考虑
-      else {
+      } else { // 达到要求，并且将边界条件列出来单独考虑
         int maxLeft = 0;
         if (i == 0) {
           maxLeft = b[j - 1];
@@ -77,7 +69,8 @@ public class MedianOfTwoSortedArrays {
         } else {
           maxLeft = Math.max(a[i - 1], b[j - 1]);
         }
-        // 奇数的话不需要考虑有半部分
+
+        // 奇数的话不需要考虑右半部分
         if ((m + n) % 2 == 1) {
           return maxLeft;
         }
@@ -90,10 +83,10 @@ public class MedianOfTwoSortedArrays {
         } else {
           minRight = Math.min(b[j], a[i]);
         }
-        // 如果是偶数的话返回结果
-        return (maxLeft + minRight) / 2;
+        //如果是偶数的话返回结果
+        return (maxLeft + minRight) / 2.0;
       }
     }
-    return 0;
+    return 0.0;
   }
 }

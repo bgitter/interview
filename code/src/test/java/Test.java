@@ -13,7 +13,7 @@ import com.google.common.collect.Multiset;
 public class Test {
 
   public static void main(String[] args) {
-    int a = 9 / 2;
+    int a = (int) Math.ceil(9D / 2);
     System.out.println(a);
 
     Multiset<String> set = HashMultiset.create();
