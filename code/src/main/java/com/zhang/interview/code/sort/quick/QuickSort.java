@@ -62,8 +62,10 @@ public class QuickSort extends BaseSort {
         arr[j] = temp;
       }
     }
+    // 交换基准数与左指针值
     arr[left] = arr[i];
     arr[i] = key;
+    // 将基准数两侧的数组继续使用递归的方式排序
     quickSort(arr, left, i - 1);
     quickSort(arr, i + 1, right);
   }

@@ -57,7 +57,7 @@ public class HeapSort extends BaseSort {
       // 父节点的索引
       int pIdx = (cIdx - 1) / 2;
 
-      // 如果当前遍历的值比节点大的话，就交换值。然后继续往上层比较
+      // 如果当前遍历的值比父节点大的话，就交换值。然后继续往上层比较
       while (nums[cIdx] > nums[pIdx]) {
         // 交换当前遍历的值与父节点的值
         swap(nums, cIdx, pIdx);
